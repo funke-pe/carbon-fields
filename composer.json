@@ -1,5 +1,5 @@
 {
-    "name": "htmlburger/carbon-fields",
+    "name": "funke-pe/carbon-fields",
     "description": "WordPress developer-friendly custom fields for post types, taxonomy terms, users, comments, widgets, options and more.",
     "license": "GPL-2.0-only",
     "homepage": "http://carbonfields.net/",
@@ -99,13 +99,16 @@
             "name": "Atanas Vasilev",
             "email": "atanasvasilev91@gmail.com",
             "role": "Developer"
+        },
+        {
+            "name": "Alexander Merz",
+            "email": "alexander.merz@funkemedien.de",
+            "role": "Developer"
         }
     ],
     "support": {
-        "source": "https://github.com/htmlburger/carbon-fields",
-        "issues": "https://github.com/htmlburger/carbon-fields/issues",
-        "docs": "http://carbonfields.net/docs/",
-        "email": "wordpress@htmlburger.com"
+        "source": "https://github.com/funke-pe/carbon-fields/",
+        "docs": "http://carbonfields.net/docs/"
     },
     "autoload": {
         "psr-4": {
