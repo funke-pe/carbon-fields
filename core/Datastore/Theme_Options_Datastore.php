@@ -26,12 +26,25 @@ class Theme_Options_Datastore extends Key_Value_Datastore {
 
 		$storage_key_comparisons = $this->key_toolset->storage_key_patterns_to_sql( '`option_name`', $storage_key_patterns );
 
-		$storage_array = $wpdb->get_results( '
-			SELECT `option_name` AS `key`, `option_value` AS `value`
-			FROM ' . $wpdb->options . '
-			WHERE ' . $storage_key_comparisons . '
-			ORDER BY `option_name` ASC
-		' );
+		// build a safe cache key and group from class name, field name and storage key comparisons
+		$cache_key = 'crb_' . md5( get_class( $this ) . $field->get_name() . $storage_key_comparisons );
+		$cache_group = 'crb_datastore';
+
+		// Try to get the cached result
+		$storage_array = wp_cache_get( $cache_key, $cache_group );
+
+		if ( $storage_array === false ) {
+			// If cache is empty, perform the query
+			$storage_array = $wpdb->get_results( '
+				SELECT `option_name` AS `key`, `option_value` AS `value`
+				FROM ' . $wpdb->options . '
+				WHERE ' . $storage_key_comparisons . '
+				ORDER BY `option_name` ASC
+			' );
+
+			// Store the result in cache
+			wp_cache_set( $cache_key, $storage_array, $cache_group, 3600 ); // Cache TTL should be configurable
+		}
 
 		$storage_array = apply_filters( 'carbon_fields_datastore_storage_array', $storage_array, $this, $storage_key_patterns );
 
